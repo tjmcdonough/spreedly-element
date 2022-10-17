@@ -43,29 +43,31 @@ export default {
 
     document.onreadystatechange = () => {
     if (document.readyState == "complete") {
-      console.log('Page completed with image and files!')
+      
       Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
         "numberEl": "spreedly-number",
         "cvvEl": "spreedly-cvv"
       });
 
       Spreedly.on("ready", function () {
+
+        Spreedly.setParam('allow_blank_name', true);
+        Spreedly.setParam('allow_expired_date', true);
       
-      var submitButton = document.getElementById('submit-button');
-      submitButton.disabled = false;
+        var submitButton = document.getElementById('submit-button');
+        submitButton.disabled = false;
 
-      console.log('spreedly is ready');
+        console.log('spreedly is ready');
 
-      var creditCardField = document.getElementById('card_number');
-      // creditCardField.disabled = false;
-      creditCardField.value = '';
-
-    
-      Spreedly.on('errors', function(errors) {
-        for (var i=0; i < errors.length; i++) {
-          var error = errors[i];
-          console.log(error);
-        };
+        var creditCardField = document.getElementById('card_number');
+        // creditCardField.disabled = false;
+        creditCardField.value = '';
+      
+        Spreedly.on('errors', function(errors) {
+          for (var i=0; i < errors.length; i++) {
+            var error = errors[i];
+            console.log(error);
+          };
       });
 
       Spreedly.on('paymentMethod', function(token, pmData) {
@@ -81,21 +83,21 @@ export default {
 
       // Invoke Spreedly.recache() to recache CVV. On success,
       // the "recache" event will be triggered.
-      Spreedly.on("recache", function(token, paymentMethod) {
+      // Spreedly.on("recache", function(token, paymentMethod) {
 
-        // Send ping back to server for post-recache transaction processing
-        var masterForm = document.getElementById('payment-form');
-        masterForm.submit();
-      });
+      //   // Send ping back to server for post-recache transaction processing
+      //   var masterForm = document.getElementById('payment-form');
+      //   masterForm.submit();
+      // });
   
-      Spreedly.setRecache("2JUJq2v4HcgLwMJCiZvzDJuTxd" , {
-        'card_type': 'visa',
-        'last_four_digits': '1234'
-      });
+      // Spreedly.setRecache("2JUJq2v4HcgLwMJCiZvzDJuTxd" , {
+      //   'card_type': 'visa',
+      //   'last_four_digits': '1234'
+      // });
 
-        Spreedly.setParam('allow_blank_name', true);
-        Spreedly.setParam('allow_expired_date', true);
+       
         });
+
         }
       }
     },
@@ -103,7 +105,6 @@ export default {
       //Invoked Method
       submitPaymentForm(e) {
 
-        debugger;
         e.preventDefault(); 
         console.log('spreedly submiting payment form');
 
@@ -135,5 +136,20 @@ export default {
   .spreedly-bottom-input {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+  }
+
+  .spreedly-pay-now {
+    background-color: rgb(78, 113, 228);
+    border: 3px solid rgb(8, 113, 228);
+    color: #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    height: 48px;
+    width: 100%;
+  }
+
+  .spreedly-pay-now:hover {
+    background-color: rgba(78, 113, 228, 80);
+    border: 3px solid rgb(123, 149, 234);
   }
 </style>
