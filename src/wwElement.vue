@@ -1,27 +1,25 @@
 <template>
   <form id="payment-form"
-    @submit="submitPaymentForm"
-    method="POST"
-    >
-    <!-- novalidate="true" -->
-    <input type="hidden"  name="payment_method_token" id="payment_method_token">
+  @submit="submitPaymentForm"
+  method="POST"
+  novalidate="true">
 
-    <label for="full_name">Name</label>
-    <input type="text" id="full_name" name="full_name"><br/>
+  <input type="hidden" name="payment_method_token" id="payment_method_token">
+  
+  <input type="text" class="spreedly-input" id="full_name" name="full_name" style="min-width: 300px" placeholder="Name on the card">
 
-    <label>Credit Card Number</label>
-    <div id="spreedly-number" style="width:225px; height:35px; border: 2px solid"></div><br/>
+  <div id="spreedly-number" class="spreedly-input"  placeholder="4242 4242 4242 4242"></div>
 
-    <label for="month">Expiration Date</label>
-    <input type="text" id="month" name="month" maxlength="2">
-    <input type="text" id="year" name="year" maxlength="4"><br/>
+  <div style="display: flex">
+    <input type="text" class="spreedly-input" id="month" name="month" maxlength="2" placeholder="MM">
+    <input type="text" class="spreedly-input" id="year" name="year" maxlength="4" placeholder="YY"><br/>
+  </div>
 
-    <label>CVV</label>
-    <div id="spreedly-cvv" style="width:60px; height:35px; border: 2px solid "></div><br/>
+  <div id="spreedly-cvv" class="spreedly-input" style="width:100%; height:48px; border: 1px solid #ebebf4" placeholder="CVV"></div><br/>
 
-    <input id="submit-button" type="submit" value="Pay Now" disabled>
+  <input id="submit-button" type="submit" value="Pay Now" disabled>
 
-  </form>
+</form>
 </template>
 
 <script>
@@ -106,7 +104,7 @@ export default {
       submitPaymentForm(e) {
 
         debugger;
-        //e.preventDefault(); 
+        e.preventDefault(); 
         console.log('spreedly submiting payment form');
 
         var requiredFields = {};
@@ -115,16 +113,16 @@ export default {
         requiredFields["month"] = document.getElementById("month").value;
         requiredFields["year"] = document.getElementById("year").value;
         Spreedly.tokenizeCreditCard(requiredFields);
-        //return false;
+        return false;
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.my-element {
-  p {
-    font-size: 18px;
+<style scoped>
+  .spreedly-input {
+    width:100%;
+    height:48px;
+    border: 1px solid #ebebf4;
   }
-}
 </style>
