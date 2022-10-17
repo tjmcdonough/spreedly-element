@@ -6,16 +6,16 @@
 
   <input type="hidden" name="payment_method_token" id="payment_method_token">
   
-  <input type="text" class="spreedly-input" id="full_name" name="full_name" style="min-width: 300px" placeholder="Name on the card">
+  <input type="text" class="spreedly-input spreedly-top-input" id="full_name" name="full_name" style="min-width: 300px" placeholder="Name on the card">
 
   <div id="spreedly-number" class="spreedly-input"  placeholder="4242 4242 4242 4242"></div>
 
   <div style="display: flex">
     <input type="text" class="spreedly-input" id="month" name="month" maxlength="2" placeholder="MM">
-    <input type="text" class="spreedly-input" id="year" name="year" maxlength="4" placeholder="YY"><br/>
+    <input type="text" class="spreedly-input" id="year" name="year" maxlength="4" placeholder="YYYY"><br/>
   </div>
 
-  <div id="spreedly-cvv" class="spreedly-input" style="width:100%; height:48px; border: 1px solid #ebebf4" placeholder="CVV"></div><br/>
+  <div id="spreedly-cvv" class="spreedly-input spreedly-bottom-input" style="width:100%; height:48px; border: 1px solid #ebebf4" placeholder="CVV"></div><br/>
 
   <input id="submit-button" type="submit" value="Pay Now" disabled>
 
@@ -120,9 +120,20 @@ export default {
 </script>
 
 <style scoped>
-  .spreedly-input {
+  .spreedly-input, .input-outline-none {
     width:100%;
     height:48px;
     border: 1px solid #ebebf4;
+    padding: 12px;
+  }
+
+  .spreedly-top-input {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .spreedly-bottom-input {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 </style>
