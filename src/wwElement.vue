@@ -17,7 +17,7 @@
 
   <div id="spreedly-cvv" class="spreedly-input spreedly-bottom-input" style="width:100%; height:48px; border: 1px solid #ebebf4" placeholder="CVV"></div><br/>
 
-  <input id="submit-button" type="submit" value="Pay Now" disabled>
+  <input id="submit-button" type="submit" value="Pay Now" class="spreedly-pay-now" disabled>
 
 </form>
 </template>
