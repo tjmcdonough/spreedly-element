@@ -38,15 +38,36 @@ export default {
     }
   },
   mounted() {
-    console.log('mounted');
+    console.log('mounted'); 
 
     let recaptchaScript = document.createElement('script')
     recaptchaScript.setAttribute('src', 'https://core.spreedly.com/iframe/iframe-v1.min.js')
     document.head.appendChild(recaptchaScript);
+    
+    var accessToken = ''; //eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFmdkNWWUsxRGxKWkRkNzRtSTI3VSJ9.eyJpc3MiOiJodHRwczovL2FjbWVjb3JlLWRldi51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDk0NTYyNTIxOTAzMjE5MjU3MzIiLCJhdWQiOlsiaHR0cHM6Ly9kZXYuYWNtZWRhby5jb20vYXV0aCIsImh0dHBzOi8vYWNtZWNvcmUtZGV2LnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2NjYxMDQ5MTYsImV4cCI6MTY2NjExMjExNiwiYXpwIjoib0pyaDBrd012Y1ExTDJuUXd5Yjh0b0F0OE95WmlWQ2QiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIn0.w2iKme27UZJV69bIxrxl81ZoldwGe3m_Rd1RAQHZDafCJo9jTVsPtb8lCNQlC6Kq9-nkdQ4WP97or7jksf0a9R5Bjyc8xY4LAO72FtK0JrkvW9c_coVxQvCU9cEHH4sJAwoE83GsA3w27mg4TeNsbT0fTsYEJk7cJHCINl3Om7EqZIpOrpRqoXoqISj7F3ObWSqhHXjLFZsIrI5LhEIWZNRLdhuCLR5WTenLSUh5LcKcmd7OJ4ngaJiJcGEhF_2LWfjpGj9WAxI-nTVqNeBIU9k-86DxSsUBMXJz0Ns3jRSYfydeH6sTy3fex9hjOb-4lNxUuCvRfktd-yIXVcbA3A
+    var cookies = document.cookie.split(';');
+    
+    for(var i=0 ; i < cookies.length ; ++i) {
+        var pair = cookies[i].trim().split('=');
+        if(pair[0] == 'session')
+          accessToken = pair[1];
+    }
+
+    this.loginToAcmeBackend(accessToken);
+
+    if (document.readyState == "complete") { 
+
+      // Need two inits for when hot refresh happens
+      Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
+        "numberEl": "spreedly-number",
+        "cvvEl": "spreedly-cvv"
+      });
+    }
 
     document.onreadystatechange = () => {
-    if (document.readyState == "complete") {
-      
+    if (document.readyState == "complete") { 
+
+      // Need two inits for when hot refresh happens
       Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
         "numberEl": "spreedly-number",
         "cvvEl": "spreedly-cvv"
@@ -85,14 +106,8 @@ export default {
           updated_at: payment_method.updated_at
         };
 
-        var accessToken = '';
-        var cookies = document.cookie.split(';');
         
-        for(var i=0 ; i < cookies.length ; ++i) {
-            var pair = cookies[i].trim().split('=');
-            if(pair[0] == 'session')
-              accessToken = pair[1];
-        }
+
 
         const headers = { 
           'Content-Type': 'application/json',
@@ -178,20 +193,41 @@ export default {
         Spreedly.tokenizeCreditCard(requiredFields);
 
         return false;
-    },
-    getCookie(name) {
-      console.log('getting cookie ' + name)
-      var cookies = document.cookie.split(';');
-      console.log('cookies are ' + cookies)
-      for(var i=0 ; i < cookies.length ; ++i) {
+      },
+      getCookie(name) {
+        
+        var cookies = document.cookie.split(';');
+        
+        for(var i=0 ; i < cookies.length ; ++i) {
           var pair = cookies[i].trim().split('=');
           if(pair[0] == name)
-              return pair[1];
+          return pair[1];
+        }
+        return null;
+      },
+      loginToAcmeBackend(jwt) {
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + jwt
+        };
+
+        console.log(jwt);
+
+        const serverUrl = 'https://dev.acmedao.com';
+
+        return Axios
+        .post(`${serverUrl}/user/login`, {}, { headers })
+        .then((response) => {
+          console.log("Successfully logged in " + JSON.stringify(response));
+        })
+        .catch((error) => {
+          console.log("Failed to log in " + error)
+        })
       }
-      return null;
     }
   }
-}
 
 </script>
 
