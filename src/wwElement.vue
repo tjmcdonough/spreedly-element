@@ -33,7 +33,7 @@
         response: null,
         loading: true,
         errored: false,
-        accessToken: ''
+        accessToken: window.vm === undefined ? '' : window.vm.config.globalProperties.$cookie.getCookie('session') ?? ''
       }
     },
     mounted() {
