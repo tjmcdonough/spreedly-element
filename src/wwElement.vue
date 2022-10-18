@@ -33,7 +33,7 @@
         response: null,
         loading: true,
         errored: false,
-        accessToken: window.vm === undefined ? '' : window.vm.config.globalProperties.$cookie.getCookie('session') ?? ''
+        accessToken: this.getCookie('session')
       }
     },
     mounted() {
@@ -126,19 +126,27 @@
       methods: {
         //Invoked Method
         submitPaymentForm(e) {
-  
           e.preventDefault(); 
-          console.log('spreedly submiting payment form');
-  
-          var requiredFields = {};
-          // Get required, non-sensitive, values from host page
-          requiredFields["full_name"] = document.getElementById("full_name").value;
-          requiredFields["month"] = document.getElementById("month").value;
-          requiredFields["year"] = document.getElementById("year").value;
-  
-          Spreedly.tokenizeCreditCard(requiredFields);
-  
-          return false;
+        console.log('spreedly submiting payment form');
+
+        var requiredFields = {};
+        // Get required, non-sensitive, values from host page
+        requiredFields["full_name"] = document.getElementById("full_name").value;
+        requiredFields["month"] = document.getElementById("month").value;
+        requiredFields["year"] = document.getElementById("year").value;
+
+        Spreedly.tokenizeCreditCard(requiredFields);
+
+        return false;
+      },
+      getCookie(name) {
+        var cookies = document.cookie.split(';');
+        for(var i=0 ; i < cookies.length ; ++i) {
+            var pair = cookies[i].trim().split('=');
+            if(pair[0] == name)
+                return pair[1];
+        }
+        return null;
       }
     }
   }
