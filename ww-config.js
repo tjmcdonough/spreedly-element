@@ -5,12 +5,12 @@ export default {
     },
   },
   properties: {
-    textColor: {
+    accessToken: {
       label: {
-        en: "Text color",
+        en: "Access token",
       },
-      type: "Color",
-      defaultValue: "#F23636",
-    },
-  },
+      type: "Text",
+      bindable: true,
+    }
+  }
 };
