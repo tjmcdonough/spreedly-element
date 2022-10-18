@@ -28,18 +28,12 @@
   const serverUrl = 'https://dev.acmedao.com';
   
   export default {
-    props: {
-      content: {
-        type: Object,
-        required: true
-      }
-    },
     data () {
       return {
         response: null,
         loading: true,
         errored: false,
-        accessToken: window.vm === undefined ? '' : window.vm.config.globalProperties.$cookie.getCookie('session') ?? ''
+        accessToken: ''
       }
     },
     mounted() {
@@ -97,16 +91,16 @@
           };
   
           Axios
-          .post(`${serverUrl}/user/addCard`, raw, { headers })
-          .then((response) => {
-            console.log(response);
-            this.response = response;
-          })
-          .catch((error) => {
-            console.log(error)
-            this.errored = true;
-          })
-          .finally(() => this.loading = false)
+            .post(`${serverUrl}/user/addCard`, raw, { headers })
+            .then((response) => {
+              console.log(response);
+              this.response = response;
+            })
+            .catch((error) => {
+              console.log(error)
+              this.errored = true;
+            })
+            .finally(() => this.loading = false)
           });
   
         // Invoke Spreedly.recache() to recache CVV. On success,
