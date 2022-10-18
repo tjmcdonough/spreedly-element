@@ -26,15 +26,21 @@
 <script>
 
 import Axios from 'axios';
-const serverUrl = 'https://dev.acmedao.com';
+const serverUrl = 'https://dev.acmedao.com'
+const accessToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFmdkNWWUsxRGxKWkRkNzRtSTI3VSJ9.eyJpc3MiOiJodHRwczovL2FjbWVjb3JlLWRldi51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDk0NTYyNTIxOTAzMjE5MjU3MzIiLCJhdWQiOlsiaHR0cHM6Ly9kZXYuYWNtZWRhby5jb20vYXV0aCIsImh0dHBzOi8vYWNtZWNvcmUtZGV2LnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2NjYxMTIxNzYsImV4cCI6MTY2NjExOTM3NiwiYXpwIjoib0pyaDBrd012Y1ExTDJuUXd5Yjh0b0F0OE95WmlWQ2QiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIn0.2quA76Cj4SWmNwfKONapBbN1kZlzp3hxuAne57jwOTSxHnX9Y3PSD649eddNTyPFw4Of4YwZ5e6OkEE0mK25lE2y9DbE5sjsQsnLDUZ1qwFbkRj2WitClDjWWtqCw4eSr6goDbx83nxal8Zp2qHZe944N7AI_aCuPN5PoY-C1Bf8wW2PFfPkszM6sLKBxmtJBh-W5p8jv11c4GHW-qgIOONWgQwbioRn2I7tlbg3EEUK5X7yEmH5OPFJphaE8gAz4P_MjeYqvBqD5_9_5pxDAAai9oOr2GNsZidp3pl9wTqKs1ILtToT40quA1EAJFWhCtQc7SIo88CDETAkK69jQw';
+// this.getCookie('session');
+const headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      }
 
 export default {
   data () {
     return {
       response: null,
       loading: true,
-      errored: false,
-      accessToken: this.getCookie('session')
+      errored: false
     }
   },
   mounted() {
@@ -43,141 +49,33 @@ export default {
     let recaptchaScript = document.createElement('script')
     recaptchaScript.setAttribute('src', 'https://core.spreedly.com/iframe/iframe-v1.min.js')
     document.head.appendChild(recaptchaScript);
-    
-    var accessToken = ''; //eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFmdkNWWUsxRGxKWkRkNzRtSTI3VSJ9.eyJpc3MiOiJodHRwczovL2FjbWVjb3JlLWRldi51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDk0NTYyNTIxOTAzMjE5MjU3MzIiLCJhdWQiOlsiaHR0cHM6Ly9kZXYuYWNtZWRhby5jb20vYXV0aCIsImh0dHBzOi8vYWNtZWNvcmUtZGV2LnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2NjYxMDQ5MTYsImV4cCI6MTY2NjExMjExNiwiYXpwIjoib0pyaDBrd012Y1ExTDJuUXd5Yjh0b0F0OE95WmlWQ2QiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIn0.w2iKme27UZJV69bIxrxl81ZoldwGe3m_Rd1RAQHZDafCJo9jTVsPtb8lCNQlC6Kq9-nkdQ4WP97or7jksf0a9R5Bjyc8xY4LAO72FtK0JrkvW9c_coVxQvCU9cEHH4sJAwoE83GsA3w27mg4TeNsbT0fTsYEJk7cJHCINl3Om7EqZIpOrpRqoXoqISj7F3ObWSqhHXjLFZsIrI5LhEIWZNRLdhuCLR5WTenLSUh5LcKcmd7OJ4ngaJiJcGEhF_2LWfjpGj9WAxI-nTVqNeBIU9k-86DxSsUBMXJz0Ns3jRSYfydeH6sTy3fex9hjOb-4lNxUuCvRfktd-yIXVcbA3A
-    var cookies = document.cookie.split(';');
-    
-    for(var i=0 ; i < cookies.length ; ++i) {
-        var pair = cookies[i].trim().split('=');
-        if(pair[0] == 'session')
-          accessToken = pair[1];
-    }
 
-    this.loginToAcmeBackend(accessToken);
+    // var cookies = document.cookie.split(';');
 
-    if (document.readyState == "complete") { 
+    // for(var i=0 ; i < cookies.length ; ++i) {
+    //     var pair = cookies[i].trim().split('=');
+    //     if(pair[0] == 'session')
+    //       this.accessToken = pair[1];
+    // }
+
+    if (document.readyState == "complete") {
 
       // Need two inits for when hot refresh happens
-      Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
-        "numberEl": "spreedly-number",
-        "cvvEl": "spreedly-cvv"
-      });
+
+      this.initialiseSpreedly();
     }
 
     document.onreadystatechange = () => {
     if (document.readyState == "complete") { 
 
-      // Need two inits for when hot refresh happens
-      Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
-        "numberEl": "spreedly-number",
-        "cvvEl": "spreedly-cvv"
-      });
+    // Need two inits for when hot refresh happens
 
-      Spreedly.on("ready", function () {
-
-        Spreedly.setParam('allow_blank_name', true);
-        Spreedly.setParam('allow_expired_date', true);
-      
-        var submitButton = document.getElementById('submit-button');
-        submitButton.disabled = false;
-
-        console.log('spreedly is ready');
-
-        var creditCardField = document.getElementById('card_number');
-              
-        Spreedly.on('errors', function(errors) {
-          for (var i=0; i < errors.length; i++) {
-            var error = errors[i];
-            console.log(error);
-          };
-      });
-
-      Spreedly.on('paymentMethod', function(token, payment_method) {
-
-        const addCard = {
-          token: token,
-          number: payment_method.number,
-          month: payment_method.month,
-          year: payment_method.year,
-          full_name: payment_method.full_name,
-          card_type: payment_method.card_type,
-          payment_method_type: payment_method.payment_method_type,
-          created_at: payment_method.created_at,
-          updated_at: payment_method.updated_at
-        };
-
-        
+    this.initialiseSpreedly();
 
 
-        const headers = { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + accessToken
-        };
-
-        Axios
-          .post(`${serverUrl}/user/addCard`, addCard, { headers })
-          .then((response) => {
-            console.log(response);
-            this.response = response;
-          })
-          .catch((error) => {
-            console.log(error)
-            this.errored = true;
-          })
-          .finally(() => this.loading = false)
-       
-
-        // const createWyreCardTransaction = {
-        //   token: token,
-        //   number: payment_method.number,
-        //   month: payment_method.month,
-        //   year: payment_method.year,
-        //   full_name: payment_method.full_name,
-        //   card_type: payment_method.card_type,
-        //   payment_method_type: payment_method.payment_method_type,
-        //   created_at: payment_method.created_at,
-        //   updated_at: payment_method.updated_at,
-        //   destCurrency: 'ETH',
-        //   priceInDestCurrency: '0.01',
-        //   feesInDestCurrency: '0.0005',
-        //   destWallet: '0x48C6F6b6828145E051aAf66dFaA3798450176473',
-        //   tokenId: '77',
-        //   contractId: '0x0'
-        // };
-
-        // Axios
-        //   .post(`${serverUrl}/user/createWyreCardTransaction`, createWyreCardTransaction, { headers })
-        //   .then((response) => {
-        //     console.log(response);
-        //     this.response = response;
-        //   })
-        //   .catch((error) => {
-        //     console.log(error)
-        //     this.errored = true;
-        //   })
-        //   .finally(() => this.loading = false)
-
-        });
-
-      // Invoke Spreedly.recache() to recache CVV. On success,
-      // the "recache" event will be triggered.
-      // Spreedly.on("recache", function(token, paymentMethod) {
-
-      //   // Send ping back to server for post-recache transaction processing
-      //   var masterForm = document.getElementById('payment-form');
-      //   masterForm.submit();
-      // });
-  
-      // Spreedly.setRecache("2JUJq2v4HcgLwMJCiZvzDJuTxd" , {
-      //   'card_type': 'visa',
-      //   'last_four_digits': '1234'
-      // });
-          });
-        }
-      }
-    },
-    methods: {
+  }
+}},
+  methods: {
       //Invoked Method
       submitPaymentForm(e) {
 
@@ -194,7 +92,103 @@ export default {
 
         return false;
       },
-      getCookie(name) {
+      initialiseSpreedly() {
+
+        Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
+          "numberEl": "spreedly-number",
+          "cvvEl": "spreedly-cvv"
+        }); 
+
+      this.loginToAcmeBackend(accessToken); 
+       
+
+    Spreedly.on("ready", function () {
+      
+    Spreedly.setParam('allow_blank_name', true); 
+    Spreedly.setParam('allow_expired_date', true);
+  
+    var submitButton = document.getElementById('submit-button');
+    submitButton.disabled = false;
+
+    console.log('spreedly is ready');
+
+    var creditCardField = document.getElementById('card_number'); 
+          
+    Spreedly.on('errors', function(errors) {
+      for (var i=0; i < errors.length; i++) {
+        var error = errors[i];
+        console.log(error);
+      };
+  });
+
+  Spreedly.on('paymentMethod', function(token, payment_method) {
+    
+    console.log('on successful spreedly payment method');
+
+    const addCard = {
+      token: token,
+      number: payment_method.number,
+      month: payment_method.month,
+      year: payment_method.year,
+      full_name: payment_method.full_name,
+      card_type: payment_method.card_type,
+      payment_method_type: payment_method.payment_method_type,
+      created_at: payment_method.created_at,
+      updated_at: payment_method.updated_at
+    };
+    
+    console.log('Logged in with JWT' + accessToken)
+
+    Axios
+      .post(`${serverUrl}/user/addCard`, addCard, { headers })
+      .then((response) => {
+        console.log(response);
+        this.response = response;
+      })
+      .catch((error) => {
+        console.log(error)
+        this.errored = true;
+      })
+      .finally(() => this.loading = false)
+
+    });
+  });
+},
+
+
+    // const createWyreCardTransaction = {
+    //   token: token,
+    //   number: payment_method.number,
+    //   month: payment_method.month,
+    //   year: payment_method.year,
+    //   full_name: payment_method.full_name,
+    //   card_type: payment_method.card_type,
+    //   payment_method_type: payment_method.payment_method_type,
+    //   created_at: payment_method.created_at,
+    //   updated_at: payment_method.updated_at,
+    //   destCurrency: 'ETH',
+    //   priceInDestCurrency: '0.01',
+    //   feesInDestCurrency: '0.0005',
+    //   destWallet: '0x48C6F6b6828145E051aAf66dFaA3798450176473',
+    //   tokenId: '77',
+    //   contractId: '0x0'
+    // };
+
+    // Axios
+    //   .post(`${serverUrl}/user/createWyreCardTransaction`, createWyreCardTransaction, { headers })
+    //   .then((response) => {
+    //     console.log(response);
+    //     this.response = response;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //     this.errored = true;
+    //   })
+    //   .finally(() => this.loading = false)
+
+    
+ 
+      getCookie(name) { 
         
         var cookies = document.cookie.split(';');
         
@@ -206,21 +200,13 @@ export default {
         return null;
       },
       loginToAcmeBackend(jwt) {
-
-        const headers = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + jwt
-        };
-
-        console.log(jwt);
-
-        const serverUrl = 'https://dev.acmedao.com';
+ 
+        console.log('Loggging in with JWT' + jwt)
 
         return Axios
         .post(`${serverUrl}/user/login`, {}, { headers })
         .then((response) => {
-          console.log("Successfully logged in " + JSON.stringify(response));
+          console.log("Successfully logged in with payment method and JWT " + jwt);
         })
         .catch((error) => {
           console.log("Failed to log in " + error)
