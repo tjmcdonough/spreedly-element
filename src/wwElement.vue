@@ -1,5 +1,5 @@
 <template>
-    <form id="payment-form"
+  <form id="payment-form"
     @submit="submitPaymentForm"
     method="POST"
     novalidate="true">
@@ -32,10 +32,6 @@
       content: {
         type: Object,
         required: true
-      },
-      accessToken: {
-        type: String,
-        required: false
       }
     },
     data () {
