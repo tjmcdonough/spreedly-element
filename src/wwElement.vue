@@ -94,17 +94,14 @@ export default {
       },
       initialiseSpreedly() {
 
-        try {
+       try {
 
-          Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
+        Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
           "numberEl": "spreedly-number",
           "cvvEl": "spreedly-cvv"
-          }); 
-          
-        } catch (error) { 
-          
-        }
-
+        }); 
+        
+       
        
 
       this.loginToAcmeBackend(accessToken); 
@@ -161,6 +158,11 @@ export default {
 
     });
   });
+
+} catch (error) {
+        
+      }
+
 },
 
 
