@@ -113,23 +113,23 @@ export default {
           .finally(() => this.loading = false)
        
 
-        const createWyreCardTransaction = {
-          token: token,
-          number: payment_method.number,
-          month: payment_method.month,
-          year: payment_method.year,
-          full_name: payment_method.full_name,
-          card_type: payment_method.card_type,
-          payment_method_type: payment_method.payment_method_type,
-          created_at: payment_method.created_at,
-          updated_at: payment_method.updated_at,
-          destCurrency: 'ETH',
-          priceInDestCurrency: '0.01',
-          feesInDestCurrency: '0.0005',
-          destWallet: '0x48C6F6b6828145E051aAf66dFaA3798450176473',
-          tokenId: '77',
-          contractId: '0x0'
-        };
+        // const createWyreCardTransaction = {
+        //   token: token,
+        //   number: payment_method.number,
+        //   month: payment_method.month,
+        //   year: payment_method.year,
+        //   full_name: payment_method.full_name,
+        //   card_type: payment_method.card_type,
+        //   payment_method_type: payment_method.payment_method_type,
+        //   created_at: payment_method.created_at,
+        //   updated_at: payment_method.updated_at,
+        //   destCurrency: 'ETH',
+        //   priceInDestCurrency: '0.01',
+        //   feesInDestCurrency: '0.0005',
+        //   destWallet: '0x48C6F6b6828145E051aAf66dFaA3798450176473',
+        //   tokenId: '77',
+        //   contractId: '0x0'
+        // };
 
         // Axios
         //   .post(`${serverUrl}/user/createWyreCardTransaction`, createWyreCardTransaction, { headers })
@@ -223,7 +223,7 @@ export default {
 
   .spreedly-pay-now {
     background-color: rgb(78, 113, 228);
-    border: 3px solid rgb(8, 113, 228);
+    border: 3px solid rgb(78, 113, 228);
     color: #fff;
     font-size: 16px;
     border-radius: 8px;
