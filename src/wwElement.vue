@@ -94,16 +94,24 @@ export default {
       },
       initialiseSpreedly() {
 
-        Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
+        try {
+
+          Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
           "numberEl": "spreedly-number",
           "cvvEl": "spreedly-cvv"
-        }); 
+          }); 
+          
+        } catch (error) { 
+          
+        }
+
+       
 
       this.loginToAcmeBackend(accessToken); 
        
 
     Spreedly.on("ready", function () {
-      
+
     Spreedly.setParam('allow_blank_name', true); 
     Spreedly.setParam('allow_expired_date', true);
   
