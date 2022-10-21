@@ -11,6 +11,27 @@ export default {
       },
       type: "Text",
       bindable: true,
+    },
+    auth0_jwt: {
+      label: {
+        en: "Auth0 JWT token",
+      },
+      type: "Text",
+      bindable: true
+    },
+    payment_complete: {
+      label: {
+        en: "Is payment complete?",
+      },
+      type: "Boolean",
+      bindable: true
     }
-  }
+  }, 
+  variables: [
+    { 
+      name: 'var_payment_complete',
+      type: 'Boolean',
+      defaultValue: false
+    }
+  ]
 };
