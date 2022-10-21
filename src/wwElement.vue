@@ -70,7 +70,6 @@ const serverUrl = "https://dev.acmedao.com";
 const accessToken = getCookie('session');
   // TODO: Is this the correct way to get the JWT token? Or can I use the variable you declared called auth0_jwt
   //  getCookie('session');
-  
 const headers = {
   "Content-Type": "application/json",
   Accept: "application/json",
@@ -196,6 +195,8 @@ export default {
             .then((response) => {
               console.log(response);
               this.response = response;
+              this.content.payment_complete = true;
+              this.content.var_payment_complete = true;
             })
             .catch((error) => {
               console.log(error)

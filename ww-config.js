@@ -30,8 +30,10 @@ export default {
   variables: [
     { 
       name: 'var_payment_complete',
+      value: false,
       type: 'Boolean',
-      defaultValue: false
+      defaultValue: false,
+      bindable: true
     }
   ]
 };
