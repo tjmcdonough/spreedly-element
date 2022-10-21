@@ -67,10 +67,10 @@
 import Axios from "axios";
 
 const serverUrl = "https://dev.acmedao.com";
-const accessToken =
-  "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFmdkNWWUsxRGxKWkRkNzRtSTI3VSJ9.eyJpc3MiOiJodHRwczovL2FjbWVjb3JlLWRldi51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDk0NTYyNTIxOTAzMjE5MjU3MzIiLCJhdWQiOlsiaHR0cHM6Ly9kZXYuYWNtZWRhby5jb20vYXV0aCIsImh0dHBzOi8vYWNtZWNvcmUtZGV2LnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2NjYzNTU0NzUsImV4cCI6MTY2NjM2MjY3NSwiYXpwIjoib0pyaDBrd012Y1ExTDJuUXd5Yjh0b0F0OE95WmlWQ2QiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIn0.qryfcm3SHhvgtRqbHjFXj4mBRRnmDdo1wPyRLrRb4X9XbbLgK2N9kqiFlumfEuFXUothJLa_G0nfM65oFrkx50LUveW-UpV5KyEC8S79oWd2r7PnnKgLMwFBm2gDP_wp4NGe73shpzvrRp9t02o-gjDAzQSHdyC71WS8_xdFJuwTBaRA-VLLkXBs5CFky-K1pACjfMFpNheDHds5aiLuocLOd7sXWCwL8Fzr92aUIYRTO9D9VEZBRSUwsC6a6p9NOwOBx1NOj4zovw2aHYybPXOYcCMeyq_JqVwXh4RJJq9YYzfjFyJzSISZWbACJg2K8s7FpfgbczitC8v7BVqgEg"; // Hard code JWT here if needed'';
+const accessToken = getCookie('session');
   // TODO: Is this the correct way to get the JWT token? Or can I use the variable you declared called auth0_jwt
   //  getCookie('session');
+  
 const headers = {
   "Content-Type": "application/json",
   Accept: "application/json",
