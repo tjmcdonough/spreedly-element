@@ -196,7 +196,10 @@ export default {
               console.log(response);
               this.response = response;
               this.content.payment_complete = true;
-              this.content.var_payment_complete = true;
+              wwLib.wwVariable.updateValue(
+                `${this.id}-var_payment_complete`,
+                true
+              );
             })
             .catch((error) => {
               console.log(error)
