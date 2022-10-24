@@ -1,0 +1,17 @@
+{
+    "root": true,
+    "env": {
+        "node": true
+    },
+    "extends": ["plugin:vue/vue3-recommended", "eslint:recommended", "plugin:prettier/recommended", "@vue/prettier"],
+    "rules": {
+        "semi": ["warn", "always"],
+        "quotes": ["warn", "single", { "avoidEscape": true }],
+        "no-console": "warn"
+    },
+    "globals": {
+        "wwLib": "readonly",
+        "axios": "readonly",
+        "_": "readonly"
+    }
+}

@@ -1,106 +1,51 @@
 <template>
-  <form
-    id="payment-form"
-    @submit="submitPaymentForm"
-    method="POST"
-    novalidate="true"
-  >
-    <input
-      type="hidden"
-      name="payment_method_token"
-      id="payment_method_token"
-    />
+  <form id="payment-form" @submit="submitPaymentForm" method="POST" novalidate="true">
+    <input type="hidden" name="payment_method_token" id="payment_method_token" />
 
-    <input
-      type="text"
-      class="spreedly-input spreedly-top-input"
-      id="full_name"
-      name="full_name"
-      style="min-width: 300px"
-      placeholder="Name on the card"
-    />
+    <input type="text" class="spreedly-input spreedly-top-input" id="full_name" name="full_name"
+      style="min-width: 300px" placeholder="Name on the card" />
 
-    <div
-      id="spreedly-number"
-      class="spreedly-input"
-      placeholder="4242 4242 4242 4242"
-    ></div>
+    <div id="spreedly-number" class="spreedly-input" placeholder="4242 4242 4242 4242"></div>
 
     <div style="display: flex">
-      <input
-        type="text"
-        class="spreedly-input"
-        id="month"
-        name="month"
-        maxlength="2"
-        placeholder="MM"
-      />
-      <input
-        type="text"
-        class="spreedly-input"
-        id="year"
-        name="year"
-        maxlength="4"
-        placeholder="YYYY"
-      /><br />
+      <input type="text" class="spreedly-input" id="month" name="month" maxlength="2" placeholder="MM" />
+      <input type="text" class="spreedly-input" id="year" name="year" maxlength="4" placeholder="YYYY" /><br />
     </div>
 
-    <div
-      id="spreedly-cvv"
-      class="spreedly-input spreedly-bottom-input"
-      style="width: 100%; height: 48px; border: 1px solid #ebebf4"
-      placeholder="CVV"
-    ></div>
+    <div id="spreedly-cvv" class="spreedly-input spreedly-bottom-input"
+      style="width: 100%; height: 48px; border: 1px solid #ebebf4" placeholder="CVV"></div>
     <br />
 
-    <input
-      id="submit-button"
-      type="submit"
-      value="Continue"
-      class="spreedly-pay-now"
-      disabled
-    />
+    <input id="submit-button" type="submit" value="Continue" class="spreedly-pay-now" disabled />
   </form>
 </template>
 
 <script>
-import Axios from "axios";
+import axios from "axios";
 
-const serverUrl = "https://dev.acmedao.com";
-const accessToken = getCookie('session');
-  // TODO: Is this the correct way to get the JWT token? Or can I use the variable you declared called auth0_jwt
-  //  getCookie('session');
-const headers = {
-  "Content-Type": "application/json",
-  Accept: "application/json",
-  Authorization: "Bearer " + accessToken,
-};
+async function loginToAcmeBackend () {
+  try {
+    const serverUrl = "https://dev.acmedao.com";
+    const accessToken = window.vm.config.globalProperties.$cookie.getCookie('session');
+    const headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + accessToken,
+      withCredentials: true,
+    };
 
-function getCookie(name) {
-  var cookies = document.cookie.split(";");
-
-  for (var i = 0; i < cookies.length; ++i) {
-    var pair = cookies[i].trim().split("=");
-    if (pair[0] == name) return pair[1];
+    await axios.post(`${serverUrl}/user/login`, {}, { headers })
+    console.log("Successfully logged in with payment method");
+  } catch (err) {
+    console.log("Failed to log in " + err);
   }
-  return null;
-}
-
-function loginToAcmeBackend(serverUrl, headers) {
-  Axios.post(`${serverUrl}/user/login`, {}, { headers })
-    .then((response) => {
-      console.log("Successfully logged in with payment method");
-    })
-    .catch((error) => {
-      console.log("Failed to log in " + error);
-    });
 }
 
 export default {
   props: {
     content: { type: Object, required: true }
   },
-  data() {
+  data () {
     return {
       weWebId: "bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76",
       response: null,
@@ -108,8 +53,8 @@ export default {
       errored: false,
     };
   },
-  mounted() {
-    console.log("mounted", {weWebId: this.weWebId});
+  async mounted () {
+    console.log("mounted", { weWebId: this.weWebId });
 
     let recaptchaScript = document.createElement("script");
     recaptchaScript.setAttribute(
@@ -118,60 +63,55 @@ export default {
     );
     document.head.appendChild(recaptchaScript);
 
-    Axios.defaults.withCredentials = true;
-
-    setTimeout(function () {
+    function initialiseSpreedly () {
       console.log("trying spreedly init");
+      if (window.Spreedly) {
+        window.Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
+          numberEl: "spreedly-number",
+          cvvEl: "spreedly-cvv",
+        });
 
-      Spreedly.init("2JUJq2v4HcgLwMJCiZvzDJuTxd", {
-        numberEl: "spreedly-number",
-        cvvEl: "spreedly-cvv",
-      });
+        // Start of on ready
+        window.Spreedly.on("ready", function () {
+          const submitButton = document.getElementById("submit-button");
+          submitButton.disabled = false;
+        });
+        // End of on ready
 
-      // Start of on ready
-      Spreedly.on("ready", function () {
-        var submitButton = document.getElementById("submit-button");
-        submitButton.disabled = false;
-      });
-      // End of on ready
+        // Start of on errors
+        window.Spreedly.on("errors", function (errors) {
+          for (var i = 0; i < errors.length; i++) {
+            const error = errors[i];
+            console.error(error);
+          }
+        });
+        // End of on errors
+        // Start of on payment method
+        window.Spreedly.on("paymentMethod", async function (token, payment_method) {
+          console.log("on successful spreedly payment method");
 
-      // Start of on errors
-      Spreedly.on("errors", function (errors) {
-        for (var i = 0; i < errors.length; i++) {
-          var error = errors[i];
-          console.log(error);
-        }
-      });
-      // End of on errors
+          const addCard = {
+            token: token,
+            number: payment_method.number,
+            month: payment_method.month,
+            year: payment_method.year,
+            full_name: payment_method.full_name,
+            card_type: payment_method.card_type,
+            payment_method_type: payment_method.payment_method_type,
+            created_at: payment_method.created_at,
+            updated_at: payment_method.updated_at,
+          };
 
-      loginToAcmeBackend(serverUrl, headers);
-
-      // Start of on payment method
-      Spreedly.on("paymentMethod", async function (token, payment_method) {
-        console.log("on successful spreedly payment method");
-
-        const addCard = {
-          token: token,
-          number: payment_method.number,
-          month: payment_method.month,
-          year: payment_method.year,
-          full_name: payment_method.full_name,
-          card_type: payment_method.card_type,
-          payment_method_type: payment_method.payment_method_type,
-          created_at: payment_method.created_at,
-          updated_at: payment_method.updated_at,
-        };
-
-        Axios.post(`${serverUrl}/user/addCard`, addCard, { headers })
-          .then((response) => {
+          try {
+            await axios.post(`${serverUrl}/user/addCard`, addCard, { headers })
             console.log(response);
             this.response = response;
-          })
-          .catch((error) => {
-            console.log(error);
+          } catch (err) {
+            console.error(error);
             this.errored = true;
-          })
-          .finally(() => (this.loading = false));
+          } finally {
+            this.loading = false;
+          }
 
           const createWyreCardTransaction = {
             token: token,
@@ -191,29 +131,33 @@ export default {
             contractId: '0x0' // TODO: Get value
           };
 
-          Axios
-            .post(`${serverUrl}/user/createWyreCardTransaction`, createWyreCardTransaction, { headers })
-            .then((response) => {
-              console.log(response);
-              
-              wwLib.wwVariable.updateValue(
-                `${this.weWebId}-var_payment_complete`,
-                true
-              );
-            })
-            .catch((error) => {
-              console.log(error)
-              this.errored = true;
-            })
-            .finally(() => this.loading = false)
+          try {
+            await axios.post(`${serverUrl}/user/createWyreCardTransaction`, createWyreCardTransaction, { headers })
+            console.log(response);
 
-      });
-      // End of on payment method
-    }, 400);
+            wwLib.wwVariable.updateValue(
+              `${this.weWebId}-var_payment_complete`,
+              true
+            );
+          } catch (err) {
+            console.error(error);
+            this.errored = true;
+          } finally {
+            this.loading = false;
+          }
+        });
+        // End of on payment method
+      } else {
+        setTimeout(() => initialiseSpreedly(), 100)
+      }
+    };
+
+    await loginToAcmeBackend();
+    initialiseSpreedly()
   },
   methods: {
     //Invoked Method
-    submitPaymentForm(e) {
+    submitPaymentForm (e) {
       e.preventDefault();
       console.log("spreedly submiting payment form");
 
@@ -223,7 +167,7 @@ export default {
       requiredFields["month"] = document.getElementById("month").value;
       requiredFields["year"] = document.getElementById("year").value;
 
-      Spreedly.tokenizeCreditCard(requiredFields);
+      window.Spreedly.tokenizeCreditCard(requiredFields);
 
       return false;
     },
