@@ -102,13 +102,14 @@ export default {
   },
   data() {
     return {
+      weWebId: this.id,
       response: null,
       loading: true,
       errored: false,
     };
   },
   mounted() {
-    console.log("mounted");
+    console.log("mounted", {weWebId});
 
     let recaptchaScript = document.createElement("script");
     recaptchaScript.setAttribute(
@@ -196,7 +197,7 @@ export default {
               console.log(response);
               
               wwLib.wwVariable.updateValue(
-                `${this.id}-var_payment_complete`,
+                `${this.weWebId}-var_payment_complete`,
                 true
               );
             })
