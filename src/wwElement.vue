@@ -102,7 +102,7 @@ export default {
   },
   data() {
     return {
-      weWebId: this.id,
+      weWebId: "bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76",
       response: null,
       loading: true,
       errored: false,
