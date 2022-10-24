@@ -194,8 +194,7 @@ export default {
             .post(`${serverUrl}/user/createWyreCardTransaction`, createWyreCardTransaction, { headers })
             .then((response) => {
               console.log(response);
-              this.response = response;
-              this.content.payment_complete = true;
+              
               wwLib.wwVariable.updateValue(
                 `${this.id}-var_payment_complete`,
                 true
