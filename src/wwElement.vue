@@ -109,7 +109,7 @@ export default {
     };
   },
   mounted() {
-    console.log("mounted", {weWebId});
+    console.log("mounted", {weWebId: this.weWebId});
 
     let recaptchaScript = document.createElement("script");
     recaptchaScript.setAttribute(
