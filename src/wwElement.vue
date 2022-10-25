@@ -150,8 +150,9 @@ export default {
                             }
                         );
                         console.log('createWyreCardTransaction success', response);
-
-                        wwLib.wwVariable.updateValue('var_payment_complete', true);
+                        
+                        wwLib.wwVariable.updateValue(this.content.var_payment_complete, value);
+                        
                     } catch (err) {
                         console.error(err);
                         this.errored = true;
