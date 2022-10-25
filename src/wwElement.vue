@@ -151,7 +151,7 @@ export default {
                         );
                         console.log('createWyreCardTransaction success', response);
 
-                        wwLib.wwVariable.updateValue(`${weWebId}-var_payment_complete`, true);
+                        wwLib.wwVariable.updateValue('var_payment_complete', true);
                     } catch (err) {
                         console.error(err);
                         this.errored = true;
