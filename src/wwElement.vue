@@ -82,22 +82,23 @@ export default {
                 });
 
                 // Start of on ready
-                window.Spreedly.on('ready', function () {
+                window.Spreedly.on('ready', () => {
                     const submitButton = document.getElementById('submit-button');
                     submitButton.disabled = false;
                 });
                 // End of on ready
 
                 // Start of on errors
-                window.Spreedly.on('errors', function (errors) {
+                window.Spreedly.on('errors', (errors) => {
                     for (var i = 0; i < errors.length; i++) {
                         const error = errors[i];
                         console.error(error);
                     }
                 });
                 // End of on errors
+                
                 // Start of on payment method
-                window.Spreedly.on('paymentMethod', async function (token, payment_method) {
+                window.Spreedly.on('paymentMethod', (token, payment_method) => {
                     console.log('on successful spreedly payment method');
 
                     const addCard = {
