@@ -28,6 +28,15 @@ export default {
                 types: ['Boolean'],
             },
         },
+        payment_processing: {
+            label: {
+                en: 'Is payment processing?',
+            },
+            type: 'Variable',
+            options: {
+                types: ['Boolean'],
+            },
+        },
     },
     variables: [
         {
@@ -36,5 +45,11 @@ export default {
             defaultValue: false,
             bindable: true,
         },
+        {
+            name: 'var_payment_processing',
+            type: 'Boolean',
+            defaultValue: false,
+            bindable: true,
+        }
     ],
 };

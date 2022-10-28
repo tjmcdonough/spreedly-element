@@ -105,6 +105,9 @@ export default {
                 // Start of on payment method
                 window.Spreedly.on('paymentMethod', (token, payment_method) => {
                     console.log('on successful spreedly payment method');
+
+                    this.updatePaymentProcessing(true);
+
                     const addCard = {
                         token: token,
                         number: payment_method.number,
@@ -149,6 +152,7 @@ export default {
                         .post(`${serverUrl}/user/createWyreCardTransaction`, createWyreCardTransaction, { headers })
                         .then(response => {
                             console.log('createWyreCardTransaction success', response);
+                            this.updatePaymentProcessing(false);
                             this.updatePaymentComplete(true);
                         })
                         .catch(error => {
@@ -183,6 +187,9 @@ export default {
         },
         updatePaymentComplete(val) {
             wwLib.wwVariable.updateValue(this.content.payment_complete, val);
+        },
+        updatePaymentProcessing(val) {
+            wwLib.wwVariable.updateValue(this.content.payment_processing, val);
         },
     },
 };
