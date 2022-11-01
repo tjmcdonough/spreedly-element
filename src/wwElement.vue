@@ -91,6 +91,10 @@ export default {
                 window.Spreedly.on('ready', () => {
                     const submitButton = document.getElementById('submit-button');
                     submitButton.disabled = false;
+                    Spreedly.setStyle("number", "width: 100%;  height:44px;");
+                    Spreedly.setStyle("cvv", "width: 100%;  height:44px;");
+                    Spreedly.setPlaceholder("number", "Card number");
+                    Spreedly.setPlaceholder("cvv", "CVV");
                 });
                 // End of on ready
 
@@ -196,17 +200,17 @@ export default {
 </script>
 
 <style scoped>
-.spreedly-input,
+.spreedly-input, 
 .input-outline-none {
     width: 100%;
     height: 48px;
     border: 1px solid #ebebf4;
-    padding: 12px;
+    padding: 0 12px;
     font-weight: 500;
     color: #000;
     background-color: #fff;
     font-family: 'Montserrat', sans-serif;
-}
+  }
 
 .spreedly-input::placeholder,
 .input-outline-none::placeholder {
