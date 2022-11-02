@@ -44,12 +44,6 @@ export default {
             type: 'Boolean',
             defaultValue: false,
             bindable: true,
-        },
-        {
-            name: 'var_payment_processing',
-            type: 'Boolean',
-            defaultValue: false,
-            bindable: true,
         }
     ],
 };
