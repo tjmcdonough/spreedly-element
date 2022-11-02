@@ -1,5 +1,5 @@
 <script>
-  import regions from '@/spreedly/data.js'
+  import regions from '@/components/data.js'
   export default {
     name: 'CountrySelect',
     props: {
