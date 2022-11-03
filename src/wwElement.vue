@@ -147,24 +147,45 @@
                               console.log(error);
                           });
                       //.finally(() => this.loading = false)
+
+
+                    const accounts = null;
+                    const walletId = null;
+                     try {
+                         accounts = wwLib.wwVariable.getValue(`${this.id}-web3_Accounts`);
+                         walletId = accounts[0]
+                         console.log('trying web3_Accounts' + JSON.stringify(accounts))
+                     } catch (error) {
+                        accounts = wwLib.wwVariable.getValue(`${this.id}-web3_accounts`);
+                        walletId = accounts[0]
+                        console.log('trying web3_accounts' + JSON.stringify(accounts))
+                     }
+
+                     console.log('this.id = ' + this.id);
+                      
+               const tokenId = wwLib.wwVariable.getValue(`${this.id}-tokenId`);
+               const contractId = wwLib.wwVariable.getValue(`${this.id}-contractId`);
+               const destinationCurrency = wwLib.wwVariable.getValue(`${this.id}-destinationCurrency`);
+               const priceInDestinationCurrency = wwLib.wwVariable.getValue(`${this.id}-priceInDestinationCurrency`);
+               const feesInDestinationCurrency = wwLib.wwVariable.getValue(`${this.id}-feesInDestinationCurrency`);
   
-                      const createWyreCardTransaction = {
-                          token: token,
-                          number: payment_method.number,
-                          month: payment_method.month,
-                          year: payment_method.year,
-                          full_name: payment_method.full_name,
-                          card_type: payment_method.card_type,
-                          payment_method_type: payment_method.payment_method_type,
-                          created_at: payment_method.created_at,
-                          updated_at: payment_method.updated_at,
-                          destCurrency: 'ETH',
-                          priceInDestCurrency: '0.01', // TODO: Get value
-                          feesInDestCurrency: '0.0005', // TODO: Get value
-                          destWallet: '0x48C6F6b6828145E051aAf66dFaA3798450176473', // TODO: Get value
-                          tokenId: '77', // TODO: Get value
-                          contractId: '0x0', // TODO: Get value
-                      };
+                const createWyreCardTransaction = {
+                    token: token,
+                    number: payment_method.number,
+                    month: payment_method.month,
+                    year: payment_method.year,
+                    full_name: payment_method.full_name,
+                    card_type: payment_method.card_type,
+                    payment_method_type: payment_method.payment_method_type,
+                    created_at: payment_method.created_at,
+                    updated_at: payment_method.updated_at,
+                    destCurrency: destinationCurrency,
+                    priceInDestCurrency: priceInDestinationCurrency,
+                    feesInDestCurrency: feesInDestinationCurrency, 
+                    destWallet: walletId,
+                    tokenId: tokenId, 
+                    contractId: contractId, 
+                };
   
                       axios
                           .post(`${serverUrl}/user/createWyreCardTransaction`, createWyreCardTransaction, { headers })
@@ -204,11 +225,9 @@
               return false;
           },
           updatePaymentComplete(val) {
-            console.log('update payment complete' + val)
             wwLib.wwVariable.updateValue(this.content.payment_complete, val);
           },
           updatePaymentProcessing(val) {
-            console.log('update payment processing' + val)
             wwLib.wwVariable.updateValue(this.content.payment_processing, val);
           },
           onSelect({name, iso2, dialCode}) {
