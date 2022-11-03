@@ -1,5 +1,5 @@
 <script>
-  import regions from '@/components/data.js'
+  import regions from './data.js'
   export default {
     name: 'CountrySelect',
     props: {

@@ -42,7 +42,7 @@
   
   <script>
   import axios from 'axios';
-  import CountrySelect from '@/components/CountrySelect.vue'
+  import CountrySelect from './components/CountrySelect.vue';
   
   const serverUrl = 'https://dev.acmedao.com';
   const accessToken = window.vm.config.globalProperties.$cookie.getCookie('session');
