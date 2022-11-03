@@ -9,14 +9,14 @@ export default {
             label: {
                 en: 'Access token',
             },
-            type: 'Text',
+            type: 'Variable',
             bindable: true,
         },
         auth0_jwt: {
             label: {
                 en: 'Auth0 JWT token',
             },
-            type: 'Text',
+            type: 'Variable',
             bindable: true,
         },
         payment_complete: {
@@ -41,42 +41,42 @@ export default {
             label: {
                 en: 'Web3 Wallet Id',
             },
-            type: 'Text',
+            type: 'Variable',
             bindable: true,
         },
         tokenId: {
             label: {
                 en: 'Token ID',
             },
-            type: 'Text',
+            type: 'Variable',
             bindable: true,
         },
         contractId: {
             label: {
                 en: 'Contract ID',
             },
-            type: 'Text',
+            type: 'Variable',
             bindable: true,
         },
         destinationCurrency: {
             label: {
                 en: 'Destination currency',
             },
-            type: 'Text',
+            type: 'Variable',
             bindable: true,
         },
         priceInDestinationCurrency: {
             label: {
                 en: 'Price in destination currency',
             },
-            type: 'Text',
+            type: 'Variable',
             bindable: true,
         },
         feesInDestinationCurrency: {
             label: {
                 en: 'Fees in destination currency',
             },
-            type: 'Text',
+            type: 'Variable',
             bindable: true,
         }
     }
