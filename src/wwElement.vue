@@ -147,10 +147,10 @@
                               console.log(error);
                           });
                       //.finally(() => this.loading = false)
+                      
+                    const walletId =  wwLib.wwVariable.getValue('bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76-web3_accounts')[0]
 
-                    const walletId =  wwLib.wwVariable.getValue(this.content.web3_walletId);
-
-                    console.log('walletId: ' + walletId + ' walletId:' + this.content.web3_walletId)
+                    console.log('hard coded walletId: ' + walletId + ' walletId: ' + this.content.web3_walletId)
 
                     const tokenId = wwLib.wwVariable.getValue(this.content.tokenId);
                     const contractId = wwLib.wwVariable.getValue(this.content.contractId);
