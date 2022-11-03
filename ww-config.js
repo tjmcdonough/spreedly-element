@@ -37,19 +37,5 @@ export default {
                 types: ['Boolean'],
             },
         },
-    },
-    variables: [
-        {
-            name: 'var_payment_complete',
-            type: 'Boolean',
-            defaultValue: false,
-            bindable: true,
-        },
-        {
-            name: 'var_payment_processing',
-            type: 'Boolean',
-            defaultValue: false,
-            bindable: true,
-        }
-    ],
+    }
 };
