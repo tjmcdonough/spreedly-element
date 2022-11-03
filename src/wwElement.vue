@@ -204,10 +204,12 @@
               return false;
           },
           updatePaymentComplete(val) {
-              wwLib.wwVariable.updateValue(this.content.payment_complete, val);
+            console.log('update payment complete' + val)
+            wwLib.wwVariable.updateValue(this.content.payment_complete, val);
           },
           updatePaymentProcessing(val) {
-              wwLib.wwVariable.updateValue(this.content.payment_processing, val);
+            console.log('update payment processing' + val)
+            wwLib.wwVariable.updateValue(this.content.payment_processing, val);
           },
           onSelect({name, iso2, dialCode}) {
             console.log(name, iso2, dialCode);
