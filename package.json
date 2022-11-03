@@ -1,6 +1,6 @@
 {
   "name": "spreedly-component",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "scripts": {
     "build": "weweb build",
     "serve": "weweb serve"

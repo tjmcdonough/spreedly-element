@@ -148,15 +148,13 @@
                           });
                       //.finally(() => this.loading = false)
                       
-                    const walletId =  wwLib.wwVariable.getValue('bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76-web3_accounts')[0]
+                    const walletId = wwLib.wwVariable.getValue('bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76-web3_accounts')[0]
 
-                    console.log('hard coded walletId: ' + walletId + ' walletId: ' + this.content.web3_walletId)
-
-                    const tokenId = wwLib.wwVariable.getValue(this.content.tokenId);
-                    const contractId = wwLib.wwVariable.getValue(this.content.contractId);
-                    const destinationCurrency = wwLib.wwVariable.getValue(this.content.destinationCurrency);
-                    const priceInDestinationCurrency = wwLib.wwVariable.getValue(this.content.priceInDestinationCurrency);
-                    const feesInDestinationCurrency = wwLib.wwVariable.getValue(this.content.feesInDestinationCurrency);
+                    const tokenId = wwLib.wwVariable.getValue('bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76-tokenId');
+                    const contractId = wwLib.wwVariable.getValue('bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76-contractId');
+                    const destinationCurrency = wwLib.wwVariable.getValue('bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76-destinationCurrency');
+                    const priceInDestinationCurrency = wwLib.wwVariable.getValue('bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76-priceInDestinationCurrency');
+                    const feesInDestinationCurrency = wwLib.wwVariable.getValue('bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76-feesInDestinationCurrency');
   
                 const createWyreCardTransaction = {
                     token: token,
