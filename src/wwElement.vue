@@ -148,26 +148,15 @@
                           });
                       //.finally(() => this.loading = false)
 
-                      const weWebId = 'bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76'
+                    const walletId =  wwLib.wwVariable.getValue(this.content.web3_walletId);
 
-                    const accounts = null;
-                    const walletId = null;
+                    console.log('walletId: ' + walletId + ' walletId:' + this.content.web3_walletId)
 
-                     try {
-                         accounts = wwLib.wwVariable.getValue(`${weWebId}-web3_Accounts`);
-                         walletId = accounts[0]
-                         console.log('trying web3_Accounts' + JSON.stringify(accounts))
-                     } catch (error) {
-                        accounts = wwLib.wwVariable.getValue(`${weWebId}-web3_accounts`);
-                        walletId = accounts[0]
-                        console.log('trying web3_accounts' + JSON.stringify(accounts))
-                     }
-
-                    const tokenId = wwLib.wwVariable.getValue(`${weWebId}-tokenId`);
-                    const contractId = wwLib.wwVariable.getValue(`${weWebId}-contractId`);
-                    const destinationCurrency = wwLib.wwVariable.getValue(`${weWebId}-destinationCurrency`);
-                    const priceInDestinationCurrency = wwLib.wwVariable.getValue(`${weWebId}-priceInDestinationCurrency`);
-                    const feesInDestinationCurrency = wwLib.wwVariable.getValue(`${weWebId}-feesInDestinationCurrency`);
+                    const tokenId = wwLib.wwVariable.getValue(this.content.tokenId);
+                    const contractId = wwLib.wwVariable.getValue(this.content.contractId);
+                    const destinationCurrency = wwLib.wwVariable.getValue(this.content.destinationCurrency);
+                    const priceInDestinationCurrency = wwLib.wwVariable.getValue(this.content.priceInDestinationCurrency);
+                    const feesInDestinationCurrency = wwLib.wwVariable.getValue(this.content.feesInDestinationCurrency);
   
                 const createWyreCardTransaction = {
                     token: token,
