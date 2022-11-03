@@ -37,7 +37,6 @@
   
     <input id="submit-button" type="submit" value="Continue" class="spreedly-pay-now" disabled><br />
   
-  
   </form>
   </template>
   
