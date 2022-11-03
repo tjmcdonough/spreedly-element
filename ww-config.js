@@ -11,6 +11,9 @@ export default {
             },
             type: 'Variable',
             bindable: true,
+            options: {
+                types: ['String']
+            }
         },
         auth0_jwt: {
             label: {
@@ -18,6 +21,9 @@ export default {
             },
             type: 'Variable',
             bindable: true,
+            options: {
+                types: ['String']
+            }
         },
         payment_complete: {
             label: {
@@ -42,7 +48,9 @@ export default {
                 en: 'Web3 Wallet Id',
             },
             type: 'Variable',
-            bindable: true,
+            options: {
+                types: ['String']
+            }
         },
         tokenId: {
             label: {
@@ -50,6 +58,9 @@ export default {
             },
             type: 'Variable',
             bindable: true,
+            options: {
+                types: ['String']
+            }
         },
         contractId: {
             label: {
@@ -57,6 +68,9 @@ export default {
             },
             type: 'Variable',
             bindable: true,
+            options: {
+                types: ['String']
+            }
         },
         destinationCurrency: {
             label: {
@@ -64,6 +78,9 @@ export default {
             },
             type: 'Variable',
             bindable: true,
+            options: {
+                types: ['String']
+            }
         },
         priceInDestinationCurrency: {
             label: {
@@ -71,6 +88,9 @@ export default {
             },
             type: 'Variable',
             bindable: true,
+            options: {
+                types: ['String']
+            }
         },
         feesInDestinationCurrency: {
             label: {
@@ -78,6 +98,9 @@ export default {
             },
             type: 'Variable',
             bindable: true,
+            options: {
+                types: ['String']
+            }
         }
     }
 };
