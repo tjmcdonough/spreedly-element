@@ -148,14 +148,6 @@
                           });
                       //.finally(() => this.loading = false)
                       
-                    const walletId = wwLib.wwVariable.getValue(this.content.web3_walletId)
-
-                    const tokenId = wwLib.wwVariable.getValue(this.content.tokenId);
-                    const contractId = wwLib.wwVariable.getValue(this.content.contractId);
-                    const destinationCurrency = wwLib.wwVariable.getValue(this.content.destinationCurrency);
-                    const priceInDestinationCurrency = wwLib.wwVariable.getValue(this.content.priceInDestinationCurrency);
-                    const feesInDestinationCurrency = wwLib.wwVariable.getValue(this.content.feesInDestinationCurrency);
-  
                 const createWyreCardTransaction = {
                     token: token,
                     number: payment_method.number,
@@ -166,12 +158,12 @@
                     payment_method_type: payment_method.payment_method_type,
                     created_at: payment_method.created_at,
                     updated_at: payment_method.updated_at,
-                    destCurrency: destinationCurrency,
-                    priceInDestCurrency: priceInDestinationCurrency,
-                    feesInDestCurrency: feesInDestinationCurrency, 
-                    destWallet: walletId,
-                    tokenId: tokenId, 
-                    contractId: contractId, 
+                    destCurrency: this.content.destinationCurrency,
+                    priceInDestCurrency:  this.content.priceInDestinationCurrency,
+                    feesInDestCurrency: this.content.feesInDestinationCurrency, 
+                    destWallet: this.content.web3_walletId,
+                    tokenId: this.content.tokenId, 
+                    contractId: this.content.contractId, 
                 };
   
                       axios
