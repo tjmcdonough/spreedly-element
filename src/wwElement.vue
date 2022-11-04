@@ -141,8 +141,9 @@
                       axios
                           .post(`${serverUrl}/user/addCard`, addCard, { headers })
                           .then(response => {
+                            console.log('Added card to backend')
                             localStorage.payment_token = token;
-                            localStorage.payment_method = payment_method;
+                            localStorage.payment_method = JSON.stringify(payment_method);
                           })
                           .catch(error => {
                             this.updatePaymentProcessing(false);
