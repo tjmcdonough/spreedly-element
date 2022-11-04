@@ -141,13 +141,14 @@
                       axios
                           .post(`${serverUrl}/user/addCard`, addCard, { headers })
                           .then(response => {
-                              console.log(response);
+                            localStorage.payment_token = token;
+                            localStorage.payment_method = payment_method;
                           })
                           .catch(error => {
                               console.log(error);
                           });
                       //.finally(() => this.loading = false)
-                      
+
                 const createWyreCardTransaction = {
                     token: token,
                     number: payment_method.number,
