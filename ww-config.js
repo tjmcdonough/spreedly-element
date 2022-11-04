@@ -48,6 +48,7 @@ export default {
                 en: 'Web3 Wallet Id',
             },
             type: 'Variable',
+            bindable: true,
             options: {
                 types: ['String']
             }
