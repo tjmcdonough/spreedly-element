@@ -157,7 +157,7 @@
               }
           };
   
-          await loginToAcmeBackend();
+          //await loginToAcmeBackend();
           initialiseSpreedly();
       },
       methods: {
