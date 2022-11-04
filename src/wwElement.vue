@@ -145,6 +145,7 @@
                             localStorage.payment_method = payment_method;
                           })
                           .catch(error => {
+                            this.updatePaymentProcessing(false);
                               console.log(error);
                           });
                       //.finally(() => this.loading = false)
