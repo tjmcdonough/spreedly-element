@@ -148,36 +148,6 @@
                               console.log(error);
                           });
                       //.finally(() => this.loading = false)
-
-                const createWyreCardTransaction = {
-                    token: token,
-                    number: payment_method.number,
-                    month: payment_method.month,
-                    year: payment_method.year,
-                    full_name: payment_method.full_name,
-                    card_type: payment_method.card_type,
-                    payment_method_type: payment_method.payment_method_type,
-                    created_at: payment_method.created_at,
-                    updated_at: payment_method.updated_at,
-                    destCurrency: this.content.destinationCurrency,
-                    priceInDestCurrency:  this.content.priceInDestinationCurrency,
-                    feesInDestCurrency: this.content.feesInDestinationCurrency, 
-                    destWallet: this.content.web3_walletId,
-                    tokenId: this.content.tokenId, 
-                    contractId: this.content.contractId, 
-                };
-  
-                      axios
-                          .post(`${serverUrl}/user/createWyreCardTransaction`, createWyreCardTransaction, { headers })
-                          .then(response => {
-                              console.log('createWyreCardTransaction success', response);
-                              this.updatePaymentProcessing(false);
-                              this.updatePaymentComplete(true);
-                          })
-                          .catch(error => {
-                              console.log(error);
-                          });
-                      //.finally(() => this.loading = false)
                   });
                   // End of on payment method
               } else {
