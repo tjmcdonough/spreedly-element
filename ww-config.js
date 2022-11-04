@@ -27,7 +27,7 @@ export default {
         },
         payment_status: {
             label: {
-                en: 'Options are new, pending, complete, failed',
+                en: 'Payment status - new, pending, complete, failed',
             },
             type: 'Variable',
             options: {
