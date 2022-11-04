@@ -124,7 +124,7 @@
                   window.Spreedly.on('paymentMethod', (token, payment_method) => {
                       console.log('on successful spreedly payment method');
   
-                      this.updatePaymentProcessing(true);
+                      this.updatePaymentStatus('pending');
   
                       const addCard = {
                           token: token,
@@ -146,7 +146,7 @@
                             localStorage.payment_method = JSON.stringify(payment_method);
                           })
                           .catch(error => {
-                            this.updatePaymentProcessing(false);
+                            this.updatePaymentStatus('failed');
                               console.log(error);
                           });
                       //.finally(() => this.loading = false)
@@ -176,11 +176,8 @@
   
               return false;
           },
-          updatePaymentComplete(val) {
-            wwLib.wwVariable.updateValue(this.content.payment_complete, val);
-          },
-          updatePaymentProcessing(val) {
-            wwLib.wwVariable.updateValue(this.content.payment_processing, val);
+          updatePaymentStatus(val) {
+            wwLib.wwVariable.updateValue(this.content.payment_status, val);
           },
           onSelect({name, iso2, dialCode}) {
             console.log(name, iso2, dialCode);

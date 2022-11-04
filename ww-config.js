@@ -25,22 +25,13 @@ export default {
                 types: ['String']
             }
         },
-        payment_complete: {
+        payment_status: {
             label: {
-                en: 'Is payment complete?',
+                en: 'Options are new, pending, complete, failed',
             },
             type: 'Variable',
             options: {
-                types: ['Boolean'],
-            },
-        },
-        payment_processing: {
-            label: {
-                en: 'Is payment processing?',
-            },
-            type: 'Variable',
-            options: {
-                types: ['Boolean'],
+                types: ['String'],
             },
         },
         web3_walletId: {
