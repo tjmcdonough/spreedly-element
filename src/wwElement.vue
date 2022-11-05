@@ -23,7 +23,7 @@
     :country="country" 
     topCountry="US" 
     :countryName="true" 
-    class="spreedly-input" 
+    class="spreedly-select" 
     aria-label="Select country"/>
   
     <input type="text" class="spreedly-input spreedly-top-input" id="zip_code" name="zip_code" placeholder="Zip Code" />
@@ -54,14 +54,15 @@
       withCredentials: true,
   };
   
-  async function loginToAcmeBackend() {
-      try {
-          await axios.post(`${serverUrl}/user/login`, {}, { headers });
-          console.log('Successfully logged in with payment method');
-      } catch (err) {
-          console.log('Failed to log in ' + err);
-      }
-  }
+// Only needed for outside low code tool
+//   async function loginToAcmeBackend() {
+//       try {
+//           await axios.post(`${serverUrl}/user/login`, {}, { headers });
+//           console.log('Successfully logged in with payment method');
+//       } catch (err) {
+//           console.log('Failed to log in ' + err);
+//       }
+//   }
   
   export default {
       props: {
@@ -105,8 +106,8 @@
                   window.Spreedly.on('ready', () => {
                       const submitButton = document.getElementById('submit-button');
                       submitButton.disabled = false;
-                      Spreedly.setStyle("number", "width: 100%;  height:44px;");
-                      Spreedly.setStyle("cvv", "width: 100%;  height:44px;");
+                      Spreedly.setStyle("number", "width: 100%; height:44px; padding: 0px;");
+                      Spreedly.setStyle("cvv", "width: 100%; height:44px; padding: 0px;");
                       Spreedly.setPlaceholder("number", "Card number");
                       Spreedly.setPlaceholder("cvv", "CVV");
                   });
@@ -190,7 +191,8 @@
   
   <style scoped>
     .spreedly-input, 
-    .input-outline-none {
+    .input-outline-none,
+    .spreedly-select {
       width:100%;
       height: 48px;
       border: 0px solid #ebebf4;
@@ -201,6 +203,14 @@
       font-family: 'Montserrat', sans-serif;
       margin: 4px 0px;
       border-radius: 12px;
+    }
+
+    .spreedly-select {
+        color: #cccccc;
+    }
+
+    .spreedly-select option {
+        color: #000;
     }
   
     .spreedly-month {
