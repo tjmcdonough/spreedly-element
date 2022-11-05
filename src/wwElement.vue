@@ -198,11 +198,15 @@
       border: 0px solid #ebebf4;
       padding: 0 12px;
       font-weight: 500;
-      color: #000;
       background-color: #F7F7FD;
       font-family: 'Montserrat', sans-serif;
       margin: 4px 0px;
       border-radius: 12px;
+    }
+
+    .spreedly-input, 
+    .input-outline-none {
+        color: #000;
     }
 
     .spreedly-select {
@@ -210,7 +214,7 @@
     }
 
     .spreedly-select option {
-        color: #000;
+        color: #000 !important;
     }
   
     .spreedly-month {
