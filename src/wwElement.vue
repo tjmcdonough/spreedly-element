@@ -1,7 +1,7 @@
 <template>
 
     <form id="payment-form"
-    @submit="submitPaymentForm"
+    @submit.prevent="submitPaymentForm"
     method="POST"
     novalidate="true">
   
@@ -179,7 +179,7 @@
       methods: {
           //Invoked Method
           submitPaymentForm(e) {
-              e.preventDefault();
+              //e.preventDefault();
               console.log('spreedly submiting payment form');
   
               var requiredFields = {};
