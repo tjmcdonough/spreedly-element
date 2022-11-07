@@ -93,6 +93,36 @@ export default {
             options: {
                 types: ['String']
             }
+        },
+        paymentToken: {
+            label: {
+                en: 'Spreedly token',
+            },
+            type: 'Variable',
+            bindable: true,
+            options: {
+                types: ['String']
+            }
+        },
+        cardType: {
+            label: {
+                en: 'Spreedly card type',
+            },
+            type: 'Variable',
+            bindable: true,
+            options: {
+                types: ['String']
+            }
+        },
+        lastFourDigits: {
+            label: {
+                en: 'Spreedly last 4 digits',
+            },
+            type: 'Variable',
+            bindable: true,
+            options: {
+                types: ['String']
+            }
         }
     }
 };

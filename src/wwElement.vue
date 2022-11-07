@@ -5,20 +5,31 @@
     method="POST"
     novalidate="true">
   
-    <input type="hidden" name="payment_method_token" id="payment_method_token">
-    
-    <input type="text" class="spreedly-input spreedly-top-input" id="full_name" name="full_name" style="min-width: 300px" placeholder="Name on the card">
+    <input 
+    v-if="isNewPayment"
+    type="text" 
+    class="spreedly-input spreedly-top-input" 
+    id="full_name" 
+    name="full_name" 
+    placeholder="Name on the card">
   
-    <div id="spreedly-number" class="spreedly-input"  placeholder="4242 4242 4242 4242"></div>
+    <div 
+    v-if="isNewPayment"
+    id="spreedly-number"
+    class="spreedly-input"
+    placeholder="4242 4242 4242 4242"></div>
   
-    <div style="display: flex">
+    <div
+    v-if="isNewPayment"
+    style="display: flex">
       <input type="text" class="spreedly-input spreedly-month" id="month" name="month" maxlength="2" placeholder="MM">
       <input type="text" class="spreedly-input spreedly-year" id="year" name="year" maxlength="4" placeholder="YYYY"><br/>
     </div>
   
     <div id="spreedly-cvv" class="spreedly-input spreedly-bottom-input" placeholder="CVV"></div>
     
-    <country-select 
+    <country-select
+    v-if="isNewPayment"
     v-model="country" 
     :country="country" 
     topCountry="US" 
@@ -26,11 +37,11 @@
     class="spreedly-select" 
     aria-label="Select country"/>
   
-    <input type="text" class="spreedly-input spreedly-top-input" id="zip_code" name="zip_code" placeholder="Zip Code" />
+    <input v-if="isNewPayment" type="text" class="spreedly-input spreedly-top-input" id="zip_code" name="zip_code" placeholder="Zip Code" />
   
-    <input type="text" class="spreedly-input spreedly-top-input" id="address" name="address" placeholder="Address" />
+    <input v-if="isNewPayment" type="text" class="spreedly-input spreedly-top-input" id="address" name="address" placeholder="Address" />
   
-    <input type="text" class="spreedly-input spreedly-top-input" id="address2" name="address2" placeholder="Address 2" />
+    <input v-if="isNewPayment" type="text" class="spreedly-input spreedly-top-input" id="address2" name="address2" placeholder="Address 2" />
     
     <br />
     <br />
@@ -72,18 +83,17 @@
         CountrySelect
       },
       data() {
-          let response = null;
-          let loading = true;
-          let errored = false;
-          /* wwEditor:start */
-          response = null;
-          /* wwEditor:end */
           return {
               weWebId: 'bac36cd6-d0f5-4270-9ef9-ca3ddeb0ed76',
               response: null,
               loading: true,
               errored: false,
           };
+      },
+      computed: {
+        isNewPayment() {
+            return !this.content.paymentToken
+        }
       },
       async mounted() {
           console.log('mounted', { weWebId: this.weWebId });
@@ -104,6 +114,11 @@
   
                   // Start of on ready
                   window.Spreedly.on('ready', () => {
+                    Spreedly.setRecache(this.content.paymentToken, {
+                        'card_type': this.content.cardType,
+                        'last_four_digits': this.content.lastFourDigits
+                    });
+
                       const submitButton = document.getElementById('submit-button');
                       submitButton.disabled = false;
                       Spreedly.setStyle("number", "width: 100%; height:44px; padding: 0px;");
