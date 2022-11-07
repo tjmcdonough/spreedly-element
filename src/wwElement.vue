@@ -92,7 +92,7 @@
       },
       computed: {
         isNewPayment() {
-            return !this.content.paymentToken
+            return !this.content.paymentToken || this.content.payment_status == 'new'
         }
       },
       async mounted() {
