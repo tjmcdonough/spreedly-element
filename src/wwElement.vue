@@ -1,9 +1,9 @@
 <template>
 
-    <form id="payment-form"
+    <!-- <form id="payment-form"
     @submit.prevent="submitPaymentForm"
     method="POST"
-    novalidate="true">
+    novalidate="true"> -->
   
     <input 
     v-if="isNewPayment"
@@ -15,6 +15,7 @@
   
     <div 
     v-if="isNewPayment"
+    type="number"
     id="spreedly-number"
     class="spreedly-input"
     placeholder="4242 4242 4242 4242"></div>
@@ -22,11 +23,11 @@
     <div
     v-if="isNewPayment"
     style="display: flex">
-      <input type="text" class="spreedly-input spreedly-month" id="month" name="month" maxlength="2" placeholder="MM">
-      <input type="text" class="spreedly-input spreedly-year" id="year" name="year" maxlength="4" placeholder="YYYY"><br/>
+      <input type="number" class="spreedly-input spreedly-month" id="month" name="month" maxlength="2" placeholder="MM">
+      <input type="number" class="spreedly-input spreedly-year" id="year" name="year" maxlength="4" placeholder="YYYY"><br/>
     </div>
   
-    <div id="spreedly-cvv" class="spreedly-input spreedly-bottom-input" placeholder="CVV"></div>
+    <div id="spreedly-cvv" type="number" class="spreedly-input spreedly-bottom-input" placeholder="CVV"></div>
     
     <country-select
     v-if="isNewPayment"
@@ -45,10 +46,10 @@
     
     <br />
     <br />
-  
+  <!--
     <input id="submit-button" type="submit" value="Continue" class="spreedly-pay-now" disabled><br />
   
-  </form>
+   </form> -->
   </template>
   
   <script>
@@ -121,8 +122,8 @@
 
                       const submitButton = document.getElementById('submit-button');
                       submitButton.disabled = false;
-                      Spreedly.setStyle("number", "width: 100%; height:44px; padding: 0px;");
-                      Spreedly.setStyle("cvv", "width: 100%; height:44px; padding: 0px;");
+                      Spreedly.setStyle("number", "width: 100%; min-width: 300px; height:44px; min-height: 44px; padding: 0px;");
+                      Spreedly.setStyle("cvv", "width: 100%; min-width: 300px; height:44px; min-height: 44px; padding: 0px;");
                       Spreedly.setPlaceholder("number", "Card number");
                       Spreedly.setPlaceholder("cvv", "CVV");
                   });
@@ -169,7 +170,7 @@
                   });
                   // End of on payment method
               } else {
-                  setTimeout(() => initialiseSpreedly(), 100);
+                  setTimeout(() => initialiseSpreedly(), 200);
               }
           };
   
