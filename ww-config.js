@@ -5,6 +5,16 @@ export default {
         },
     },
     properties: {
+        serverUrl: {
+            label: {
+                en: 'Server URL',
+            },
+            type: 'Variable',
+            bindable: true,
+            options: {
+                types: ['String']
+            }
+        },
         accessToken: {
             label: {
                 en: 'Access token',
@@ -122,6 +132,16 @@ export default {
             bindable: true,
             options: {
                 types: ['String']
+            }
+        },
+        isNewPayment: {
+            label: {
+                en: 'Is this a new payment?',
+            },
+            type: 'Variable',
+            bindable: true,
+            options: {
+                types: ['Boolean']
             }
         }
     }
