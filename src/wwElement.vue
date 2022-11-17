@@ -1,5 +1,5 @@
 <template>
-
+  <div>
   <!-- Remember to comment out the form  -->
   
     <!-- <form id="payment-form"
@@ -52,7 +52,9 @@
     <!-- <input id="payment-form-button" type="submit" value="Continue" class="spreedly-pay-now" disabled><br />
   
    </form> -->
-  </template>
+
+  </div>
+</template>
     
     <script>
     import axios from 'axios';
