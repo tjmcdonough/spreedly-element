@@ -2,13 +2,13 @@
   <div>
   <!-- Remember to comment out the form  -->
   
-    <!-- <form id="payment-form"
+    <form id="payment-form"
     @submit.prevent="submitPaymentForm"
     method="POST"
-    novalidate="true"> -->
+    novalidate="true">
   
     <input 
-    v-if="isNewPayment"
+    v-if="isNewPayment()"
     type="text" 
     class="spreedly-input spreedly-top-input" 
     id="full_name" 
@@ -16,14 +16,14 @@
     placeholder="Name on the card">
   
     <div 
-    v-if="isNewPayment"
+    v-if="isNewPayment()"
     type="number"
     id="spreedly-number"
     class="spreedly-input"
     placeholder="4242 4242 4242 4242"></div>
   
     <div
-    v-if="isNewPayment"
+    v-if="isNewPayment()"
     style="display: flex">
       <input type="number" class="spreedly-input spreedly-month" id="month" name="month" maxlength="2" placeholder="MM">
       <input type="number" class="spreedly-input spreedly-year" id="year" name="year" maxlength="4" placeholder="YYYY"><br/>
@@ -32,7 +32,7 @@
     <div id="spreedly-cvv" type="number" class="spreedly-input spreedly-bottom-input" placeholder="CVV"></div>
     
     <country-select
-    v-if="isNewPayment"
+    v-if="isNewPayment()"
     v-model="country" 
     :country="country" 
     topCountry="US" 
@@ -40,18 +40,18 @@
     class="spreedly-select" 
     aria-label="Select country"/>
   
-    <input v-if="isNewPayment" type="text" class="spreedly-input spreedly-top-input" id="zip_code" name="zip_code" placeholder="Zip Code" />
+    <input v-if="isNewPayment()" type="text" class="spreedly-input spreedly-top-input" id="zip_code" name="zip_code" placeholder="Zip Code" />
   
-    <input v-if="isNewPayment" type="text" class="spreedly-input spreedly-top-input" id="address" name="address" placeholder="Address" />
+    <input v-if="isNewPayment()" type="text" class="spreedly-input spreedly-top-input" id="address" name="address" placeholder="Address" />
   
-    <input v-if="isNewPayment" type="text" class="spreedly-input spreedly-top-input" id="address2" name="address2" placeholder="Address 2" />
+    <input v-if="isNewPayment()" type="text" class="spreedly-input spreedly-top-input" id="address2" name="address2" placeholder="Address 2" />
     
     <br />
     <br />
   
-    <!-- <input id="payment-form-button" type="submit" value="Continue" class="spreedly-pay-now" disabled><br />
+    <input id="payment-form-button" type="submit" value="Continue" class="spreedly-pay-now" disabled><br />
   
-   </form> -->
+   </form>
 
   </div>
 </template>
@@ -79,13 +79,16 @@
               paymentToken: '',
               cardType: '',
               lastFourDigits: '',
-              payment_status: 'existing',
+              payment_status: '',
               serverUrl: 'https://dev.acmedao.com',
               isNewPayment: true
             }
           };
         },
-        async mounted() {
+        unmounted() {
+          window.Spreedly = undefined
+        },
+        mounted() {
   
           const headers = {
               'Content-Type': 'application/json',
@@ -94,7 +97,7 @@
               withCredentials: true,
             };
           
-          await this.loginToAcmeBackend(headers);
+          this.loginToAcmeBackend(headers);
           
           console.log('mounted', { weWebId: this.weWebId });
           
@@ -104,14 +107,15 @@
   
           const initialiseSpreedly = () => {
               console.log('trying spreedly init');
-              if (window.Spreedly) {
-                  window.Spreedly.init('2JUJq2v4HcgLwMJCiZvzDJuTxd', {
+              
+              if (window.Spreedly && Spreedly.isLoaded() == false) {
+                  Spreedly.init('2JUJq2v4HcgLwMJCiZvzDJuTxd', {
                       numberEl: 'spreedly-number',
                       cvvEl: 'spreedly-cvv',
                   });
   
                   // Start of on ready
-                  window.Spreedly.on('ready', () => {
+                  Spreedly.on('ready', () => {
   
                     if(this.content.paymentToken)
                     {
@@ -131,7 +135,7 @@
                   // End of on ready
   
                   // Start of on errors
-                  window.Spreedly.on('errors', errors => {
+                  Spreedly.on('errors', errors => {
                       for (var i = 0; i < errors.length; i++) {
                           const error = errors[i];
                           console.error(error);
@@ -139,7 +143,7 @@
                   });
                   // End of on errors
                   // Start of on payment method
-                  window.Spreedly.on('paymentMethod', (token, payment_method) => {
+                  Spreedly.on('paymentMethod', (token, payment_method) => {
                       console.log('on successful spreedly payment method');
   
                       this.updatePaymentStatus('pending');
@@ -160,8 +164,11 @@
                           .post(`${this.content.serverUrl}/user/addCard`, addCard, { headers })
                           .then(response => {
                             console.log('Added card to backend')
-                            localStorage.payment_token = token;
-                            localStorage.payment_method = JSON.stringify(payment_method);
+
+                            this.updatePaymentResponse(token, payment_method)
+
+                            // localStorage.payment_token = token;
+                            // localStorage.payment_method = JSON.stringify(payment_method);
                           })
                           .catch(error => {
                               console.log(error);
@@ -170,12 +177,12 @@
                   });
                   // End of on payment method
               } else {
-                  setTimeout(() => initialiseSpreedly(), 100);
+                  setTimeout(() => initialiseSpreedly(), 500);
               }
             };
     
-            //await loginToAcmeBackend();
             initialiseSpreedly();
+
         },
         methods: {
           //Invoked Method
@@ -189,23 +196,31 @@
               requiredFields['month'] = document.getElementById('month').value;
               requiredFields['year'] = document.getElementById('year').value;
   
-              window.Spreedly.tokenizeCreditCard(requiredFields);
+              Spreedly.tokenizeCreditCard(requiredFields);
   
               return false;
           },
           updatePaymentStatus(val) {
             wwLib.wwVariable.updateValue(this.content.payment_status, val);
           },
-          onSelect({name, iso2, dialCode}) {
-            console.log(name, iso2, dialCode);
+          updatePaymentResponse(payment_token, payment_method) {
+
+            var val = {
+              payment_token,
+              payment_method
+            }
+            
+            console.log('Updating payment response');
+
+            wwLib.wwVariable.updateValue(this.content.payment_response, val);
           },
           isNewPayment() {
-              return this.content.isNewPayment
+            return this.content.isNewPayment
           },
-          async loginToAcmeBackend(headers) {
+          loginToAcmeBackend(headers) {
   
             try {
-                await axios.post(`${this.content.serverUrl}/user/login`, {}, { headers });
+                axios.post(`${this.content.serverUrl}/user/login`, {}, { headers });
                 console.log('Successfully logged in with payment method');
             } catch (err) {
                 console.log('Failed to log in ' + err);
@@ -231,15 +246,12 @@
         font-family: 'Montserrat', sans-serif;
         margin: 4px 0px;
         border-radius: 12px;
+        color: #000;
       }
   
       .spreedly-input, 
       .input-outline-none {
           color: #000;
-      }
-  
-      .spreedly-select {
-          color: #cccccc;
       }
   
       .spreedly-select option {
@@ -275,7 +287,6 @@
         background-color: rgba(78, 113, 228, 80);
         border: 3px solid rgb(123, 149, 234);
       }
-    
       
     </style>
     

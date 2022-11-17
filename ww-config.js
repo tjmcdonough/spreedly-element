@@ -54,56 +54,6 @@ export default {
                 types: ['String']
             }
         },
-        tokenId: {
-            label: {
-                en: 'Token ID',
-            },
-            type: 'Variable',
-            bindable: true,
-            options: {
-                types: ['String']
-            }
-        },
-        contractId: {
-            label: {
-                en: 'Contract ID',
-            },
-            type: 'Variable',
-            bindable: true,
-            options: {
-                types: ['String']
-            }
-        },
-        destinationCurrency: {
-            label: {
-                en: 'Destination currency',
-            },
-            type: 'Variable',
-            bindable: true,
-            options: {
-                types: ['String']
-            }
-        },
-        priceInDestinationCurrency: {
-            label: {
-                en: 'Price in destination currency',
-            },
-            type: 'Variable',
-            bindable: true,
-            options: {
-                types: ['String']
-            }
-        },
-        feesInDestinationCurrency: {
-            label: {
-                en: 'Fees in destination currency',
-            },
-            type: 'Variable',
-            bindable: true,
-            options: {
-                types: ['String']
-            }
-        },
         paymentToken: {
             label: {
                 en: 'Spreedly token',
@@ -135,6 +85,16 @@ export default {
             }
         },
         isNewPayment: {
+            label: {
+                en: 'Is this a new payment?',
+            },
+            type: 'Variable',
+            bindable: true,
+            options: {
+                types: ['Boolean']
+            }
+        },
+        payment_response: {
             label: {
                 en: 'Is this a new payment?',
             },
