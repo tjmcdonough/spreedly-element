@@ -74,15 +74,15 @@
             response: null,
             loading: true,
             errored: false,
-            content: {
-              accessToken: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFmdkNWWUsxRGxKWkRkNzRtSTI3VSJ9.eyJpc3MiOiJodHRwczovL2FjbWVjb3JlLWRldi51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDk0NTYyNTIxOTAzMjE5MjU3MzIiLCJhdWQiOiJvSnJoMGt3TXZjUTFMMm5Rd3liOHRvQXQ4T3laaVZDZCIsImlhdCI6MTY2ODY3NzgyNywiZXhwIjoxNjY4NzEzODI3LCJzaWQiOiJUQ3dpdnNTcno5ck53UE8yUzhMdGdYT1pGMVI0dy0xSSIsIm5vbmNlIjoiTXVWcy13ZVNmUU9zeFVYZUJLdWUwenZWNWdpQnBTOW8ifQ.ygRf7NVPx8odyMpevCelKTKmPL5tMQUcu-gR3JLk_2ERhoS0vI9bGYlrRQYq5VuPaouPdbzlZgtTyQClaCbLKxtJ6CW_PuLqZaOASrYwYEUeM3Beqnog8L9zchzv4DB8HMEkDix_DG3rfPpnq8O7BewZPf6l4iHUEYQA7vh1_bj8fK-uLoWS-yoBACV82ZdgUcJHFUbWMIxwk-qzMcwgk6epQWhqP0pV9VqSTJvR_m7dD8VylNS4uVzpZ4UFS3ygMZOX69FNCG5wmskzM0046Ks9dnVnAD87dNj86GRgKNKETHFSPvIE5VC61jmHl1Q1pjC7LNE360zhmpRVnLnV1Q',
-              paymentToken: '',
-              cardType: '',
-              lastFourDigits: '',
-              payment_status: '',
-              serverUrl: 'https://dev.acmedao.com',
-              isNewPayment: true
-            }
+            //content: {
+              //accessToken: '',
+              //paymentToken: '',
+              //cardType: '',
+              //lastFourDigits: '',
+              //payment_status: '',
+              //isNewPayment: true,
+              //serverUrl: 'https://dev.acmedao.com'
+            //}
           };
         },
         unmounted() {
@@ -230,8 +230,6 @@
         }
     };
     </script>
-    
-    
     
     <style scoped>
       .spreedly-input, 
