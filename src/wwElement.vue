@@ -176,7 +176,7 @@
                   });
                   // End of on payment method
               } else {
-                  setTimeout(() => initialiseSpreedly(), 500);
+                  setTimeout(() => initialiseSpreedly(), 2500);
               }
             };
     
