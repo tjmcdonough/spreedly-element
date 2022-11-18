@@ -1,6 +1,5 @@
 <template>
   <div>
-  <!-- Remember to comment out the form  -->
   
     <form id="payment-form"
     @submit.prevent="submitPaymentForm"
@@ -89,6 +88,8 @@
           window.Spreedly = undefined
         },
         mounted() {
+
+          this.logVariables()
   
           const headers = {
               'Content-Type': 'application/json',
@@ -99,16 +100,14 @@
           
           this.loginToAcmeBackend(headers);
           
-          console.log('mounted', { weWebId: this.weWebId });
-          
           let recaptchaScript = document.createElement('script');
           recaptchaScript.setAttribute('src', 'https://core.spreedly.com/iframe/iframe-v1.min.js');
           document.head.appendChild(recaptchaScript);
   
           const initialiseSpreedly = () => {
-              console.log('trying spreedly init');
+              console.log('Spreedly: initialising');
               
-              if (window.Spreedly && Spreedly.isLoaded() == false) {
+              if (window.Spreedly) {
                   Spreedly.init('2JUJq2v4HcgLwMJCiZvzDJuTxd', {
                       numberEl: 'spreedly-number',
                       cvvEl: 'spreedly-cvv',
@@ -144,7 +143,7 @@
                   // End of on errors
                   // Start of on payment method
                   Spreedly.on('paymentMethod', (token, payment_method) => {
-                      console.log('on successful spreedly payment method');
+                      console.log('Spreedly: on successful payment method');
   
                       this.updatePaymentStatus('pending');
   
@@ -163,7 +162,7 @@
                       axios
                           .post(`${this.content.serverUrl}/user/addCard`, addCard, { headers })
                           .then(response => {
-                            console.log('Added card to backend')
+                            console.log('Spreedly: Added card to backend')
 
                             this.updatePaymentResponse(token, payment_method)
 
@@ -171,7 +170,7 @@
                             // localStorage.payment_method = JSON.stringify(payment_method);
                           })
                           .catch(error => {
-                              console.log(error);
+                              console.log('Spreedly: ' + error);
                           });
                
                   });
@@ -185,10 +184,13 @@
 
         },
         methods: {
+          logVariables() {
+            console.log('Spreedly: Logging access token: ' + this.content.accessToken);
+          },
           //Invoked Method
           submitPaymentForm(e) {
               //e.preventDefault();
-              console.log('spreedly submiting payment form');
+              console.log('Spreedly: submiting payment form');
   
               var requiredFields = {};
               // Get required, non-sensitive, values from host page
@@ -210,7 +212,7 @@
               payment_method
             }
             
-            console.log('Updating payment response');
+            console.log('Spreedly: Updating payment response');
 
             wwLib.wwVariable.updateValue(this.content.payment_response, val);
           },
@@ -221,9 +223,9 @@
   
             try {
                 axios.post(`${this.content.serverUrl}/user/login`, {}, { headers });
-                console.log('Successfully logged in with payment method');
+                console.log('Spreedly: Successfully logged in');
             } catch (err) {
-                console.log('Failed to log in ' + err);
+                console.log('Spreedly: Failed to log in ' + err);
             }
   
           }

@@ -25,16 +25,6 @@ export default {
                 types: ['String']
             }
         },
-        auth0_jwt: {
-            label: {
-                en: 'Auth0 JWT token',
-            },
-            type: 'Variable',
-            bindable: true,
-            options: {
-                types: ['String']
-            }
-        },
         payment_status: {
             label: {
                 en: 'Payment status - new, pending, complete, failed',
@@ -43,16 +33,6 @@ export default {
             options: {
                 types: ['String'],
             },
-        },
-        web3_walletId: {
-            label: {
-                en: 'Web3 Wallet Id',
-            },
-            type: 'Variable',
-            bindable: true,
-            options: {
-                types: ['String']
-            }
         },
         paymentToken: {
             label: {
@@ -96,12 +76,12 @@ export default {
         },
         payment_response: {
             label: {
-                en: 'Is this a new payment?',
+                en: 'Payment response',
             },
             type: 'Variable',
             bindable: true,
             options: {
-                types: ['Boolean']
+                types: ['Object']
             }
         }
     }
